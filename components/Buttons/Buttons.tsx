@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import styles from './buttons.module.scss'
 import { useEffect, useState, useContext } from 'react'
 import { Context } from '../../pages/index'
@@ -12,7 +14,7 @@ function Buttons({ pairs }) {
       <h1 className={styles.title}>
         displaying only the first 15 buttons for now
       </h1>
-      {pairs.map((pair: any, index: any) =>
+      {pairs.map((pair: any, index: number) =>
         index < 15 ? (
           <button
             key={`${pair.name}-${index}`}

@@ -1,4 +1,7 @@
+// @ts-nocheck
+
 import styles from './GJNumberLabel.module.scss'
+
 function GJNumberLabel({ data }) {
   return (
     <div className={styles.container}>
