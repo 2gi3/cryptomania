@@ -13,6 +13,7 @@ export const getServerSideProps = async () => {
   const bitstampData = await bitstampRes.json()
 
   const finexRes = await fetch(
+    //https://docs.bitfinex.com/reference/rest-public-tickers
     'https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD' // response header missing access-control-allow-origin:*
   )
   const finexData = await finexRes.json()
@@ -48,11 +49,29 @@ export default function Home({
 }) {
   const [selectedPair, setSelectedPair] = useState('BTC/USD')
 
+  const coinbaseLast = Number(coinbaseData.rates.USD)
+  const bitstampUSD = bitstampData.find((obj) => {
+    return obj.pair === 'BTC/USD'
+  })
+  const bitstampLast = Number(bitstampUSD.last)
+  const finexLast = finexData[0][1]
+
+  const calculateAverageLast = () => {
+    const average = (finexLast + bitstampLast + coinbaseLast) / 3
+    console.log(average)
+    return average
+  }
+
+  const averageLast = calculateAverageLast()
+
   useEffect(() => {
-    console.log(buttonsData)
-    console.log(bitstampData)
-    console.log(coinbaseData)
-    console.log(finexData)
+    // console.log(buttonsData)
+    // console.log(bitstampData)
+    // console.log(coinbaseLast)
+    console.log(finexLast)
+    console.log(coinbaseLast)
+    console.log(bitstampUSD.last)
+    calculateAverageLast()
   }, [])
   return (
     <Context.Provider value={[selectedPair, setSelectedPair]}>
@@ -67,16 +86,9 @@ export default function Home({
 
         <main className={styles.main}>
           <section className={styles.averageTickerContainer}>
-            <h1>Average ticker values</h1>
-            {bitstampData.map((entry: any, index: number) =>
-              index < 30 ? (
-                <div key={`${entry.pair}-${index}`}>
-                  <p>
-                    The VWAP for {entry.pair} is : {entry.vwap}
-                  </p>
-                </div>
-              ) : null
-            )}
+            {/* <h1>Average ticker values</h1> */}
+            <h2>&rdquo;Last&rdquo; value for BTC/USD</h2>
+            <p>{averageLast}</p>
           </section>
           <section className={styles.tradingPairsContainer}>
             <div className={styles.tradingPairsButtons}>
