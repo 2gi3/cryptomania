@@ -1,11 +1,14 @@
-// @ts-nocheck
-
 import styles from './GJNumberLabel.module.scss'
 
-function GJNumberLabel({ data }) {
+interface GJNumberLabel {
+  data: [string, number]
+}
+
+function GJNumberLabel({ data }: GJNumberLabel) {
   return (
     <div className={styles.container}>
-      <div className={styles.number}>{data[1]}</div>
+      {/* without interpolation the browser gives an error but not typescript */}
+      <div className={styles.number}>{`${data[1]}`}</div>
       <div className={styles.label}>{data[0]}</div>
     </div>
   )

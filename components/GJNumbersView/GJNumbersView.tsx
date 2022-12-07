@@ -5,7 +5,6 @@ import GJNumberLabel from '../GJNumberLabel/GJNumberLabel'
 
 function SelectedInfo({ data }) {
   const [selectedPair, setSelectedPair]: any = useContext(Context)
-  // const [selectedPair, setSelectedPair] = useState('BTC/USD')
   const targetPairData = data.filter((pair: any) => {
     pair.pair == selectedPair
     return pair.pair == selectedPair
@@ -15,12 +14,15 @@ function SelectedInfo({ data }) {
     targetPairValues.pop()
   }, [])
 
+  let prop: [string, number]
+
   return (
     <figure className={styles.selectedPairsValue}>
       <h3>Trading values for {selectedPair} </h3>
-      {targetPairValues.map((entry, index) => (
-        <GJNumberLabel key={`${entry}-${index}`} data={entry} />
-      ))}
+      {targetPairValues.map((entry, index: number) => {
+        prop = [entry[0], Number(entry[1])]
+        return <GJNumberLabel key={`${entry}-${index}`} data={prop} />
+      })}
     </figure>
   )
 }

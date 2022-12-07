@@ -7,32 +7,34 @@ import React, { useEffect, useState } from 'react'
 import { AppProps } from 'next/app'
 import Buttons from '../components/Buttons/Buttons'
 import GJNumbersView from '../components/GJNumbersView/GJNumbersView'
+import Smile from '../components/Smile/Smile'
 
 export const getServerSideProps = async () => {
-  const bitstampRes = await fetch('https://www.bitstamp.net/api/v2/ticker/')
-  const bitstampData = await bitstampRes.json()
+  const bitstampData = await fetch(
+    'https://www.bitstamp.net/api/v2/ticker/'
+  ).then((res) => res.json())
 
-  const finexRes = await fetch(
-    //https://docs.bitfinex.com/reference/rest-public-tickers
-    'https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD' // response header missing access-control-allow-origin:*
-  )
-  const finexData = await finexRes.json()
+  const finexData = await fetch(
+    'https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD'
+  ).then((res) => res.json())
 
-  const coinbaseRes = await fetch(
+  const coinbaseEntireRes = await fetch(
     'https://api.coinbase.com/v2/exchange-rates?currency=BTC'
-  )
-  const coinbaseEntireData = await coinbaseRes.json()
-  const coinbaseData = coinbaseEntireData.data
+  ).then((res) => res.json())
 
-  const buttonsRes = await fetch(
+  const buttonsData = await fetch(
     'https://www.bitstamp.net/api/v2/trading-pairs-info/'
-  )
-  const buttonsData = await buttonsRes.json()
+  ).then((res) => res.json())
 
+  // Promise.all([bitstampRes, finexRes, coinbaseEntireRes, buttonsRes]).then(
+  //   (values) => {
+
+  //   }
+  // )
   return {
     props: {
       bitstampData,
-      coinbaseData,
+      coinbaseData: coinbaseEntireRes.data,
       finexData,
       buttonsData,
     },
@@ -56,23 +58,44 @@ export default function Home({
   const bitstampLast = Number(bitstampUSD.last)
   const finexLast = finexData[0][1]
 
-  const calculateAverageLast = () => {
-    const average = (finexLast + bitstampLast + coinbaseLast) / 3
-    console.log(average)
-    return average
+  // const calculateAverageLast = () => {
+  //   const average = (finexLast + bitstampLast + coinbaseLast) / 3
+  //   return average
+  // }
+
+  //returns average of successful API calls or an error message
+  const calculateAverageLast = (
+    a: number,
+    b: number,
+    c: number
+  ): number | string => {
+    let array = []
+    typeof a === 'number' ? array.push(a) : null
+    typeof b === 'number' ? array.push(b) : null
+    typeof c === 'number' ? array.push(c) : null
+    const sum = array.reduce((a, b) => a + b, 0)
+    const average = sum / array.length
+    if (array.length > 0) {
+      return average
+    } else {
+      return 'Data not available at this time'
+    }
   }
 
-  const averageLast = calculateAverageLast()
+  const averageLast = calculateAverageLast(
+    finexLast,
+    bitstampLast,
+    coinbaseLast
+  )
 
-  useEffect(() => {
-    // console.log(buttonsData)
-    // console.log(bitstampData)
-    // console.log(coinbaseLast)
-    console.log(finexLast)
-    console.log(coinbaseLast)
-    console.log(bitstampUSD.last)
-    calculateAverageLast()
-  }, [])
+  // useEffect(() => {
+  // console.log(buttonsData)
+  // console.log(bitstampData)
+  // console.log(coinbaseLast)
+  // console.log(finexLast)
+  // console.log(coinbaseLast)
+  // console.log(bitstampUSD.last)
+  // }, [])
   return (
     <Context.Provider value={[selectedPair, setSelectedPair]}>
       <div className={styles.container}>
@@ -99,21 +122,7 @@ export default function Home({
         </main>
 
         <footer className={styles.footer}>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Powered by{' '}
-            <span className={styles.logo}>
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                width={72}
-                height={16}
-              />
-            </span>
-          </a>
+          <Smile />
         </footer>
       </div>
     </Context.Provider>
