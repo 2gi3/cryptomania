@@ -12,7 +12,7 @@ function SelectedInfo({ data }) {
   const targetPairValues = Object.entries(targetPairData[0])
   useEffect(() => {
     targetPairValues.pop()
-  }, [])
+  })
 
   let prop: [string, number]
 

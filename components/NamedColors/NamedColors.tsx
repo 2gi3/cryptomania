@@ -5,8 +5,6 @@ import styles from './namedColors.module.scss'
 
 const NamedColors = () => {
   const [data, setData] = useState<NamedColorsType[] | null>(null)
-  let message: any = ''
-
   const pieArc = arc().innerRadius(0).outerRadius(150)
   const colorPie = pie().value(1)
 
@@ -17,6 +15,7 @@ const NamedColors = () => {
       .then((res) => res.text())
       .then((text) => {
         const Data = csvParse(text)
+        let message: any = ''
         message = message + (text.length / 1024).toFixed(1) + 'kb\n'
         message = message + Data.length + 'rows\n'
         message = message + Data.columns.length + 'columns\n'
@@ -34,8 +33,8 @@ const NamedColors = () => {
       <div className={styles.colorsContainer}>
         <svg width="300" height={300}>
           <g>
-            {colorPie(data).map((d) => (
-              <path fill={d.data.RGBHexValue} d={pieArc(d)} />
+            {colorPie(data).map((d, i) => (
+              <path key={i} fill={d.data.RGBHexValue} d={pieArc(d)} />
             ))}
             {/* {data.map((d, i) => (
             <path
