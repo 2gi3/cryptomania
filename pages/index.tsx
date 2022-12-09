@@ -8,23 +8,30 @@ import { AppProps } from 'next/app'
 import Buttons from '../components/Buttons/Buttons'
 import GJNumbersView from '../components/GJNumbersView/GJNumbersView'
 import Smile from '../components/Smile/Smile'
+import NamedColors from '../components/NamedColors/NamedColors'
 
 export const getServerSideProps = async () => {
-  const bitstampData = await fetch(
-    'https://www.bitstamp.net/api/v2/ticker/'
-  ).then((res) => res.json())
+  const bitstampData = await fetch('https://www.bitstamp.net/api/v2/ticker/')
+    .then((res) => res.json())
+    .catch((err) => console.log(err))
 
   const finexData = await fetch(
     'https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD'
-  ).then((res) => res.json())
+  )
+    .then((res) => res.json())
+    .catch((err) => console.log(err))
 
   const coinbaseEntireRes = await fetch(
     'https://api.coinbase.com/v2/exchange-rates?currency=BTC'
-  ).then((res) => res.json())
+  )
+    .then((res) => res.json())
+    .catch((err) => console.log(err))
 
   const buttonsData = await fetch(
     'https://www.bitstamp.net/api/v2/trading-pairs-info/'
-  ).then((res) => res.json())
+  )
+    .then((res) => res.json())
+    .catch((err) => console.log(err))
 
   // Promise.all([bitstampRes, finexRes, coinbaseEntireRes, buttonsRes]).then(
   //   (values) => {
@@ -122,7 +129,8 @@ export default function Home({
         </main>
 
         <footer className={styles.footer}>
-          <Smile />
+          {/* <Smile /> */}
+          <NamedColors />
         </footer>
       </div>
     </Context.Provider>
