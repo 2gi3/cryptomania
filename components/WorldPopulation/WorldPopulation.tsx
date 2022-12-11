@@ -36,7 +36,7 @@ const WorldPopulation = () => {
   }
   useEffect(() => {
     csv(
-      'https:gist.githubusercontent.com/2gi3/fb7be8ab47ce70df56e5de8315837692/raw/worldPopulation2022.csv',
+      'https://gist.githubusercontent.com/2gi3/fb7be8ab47ce70df56e5de8315837692/raw/worldPopulation2022.csv',
       row
     )
       .then((d) => setData(d.slice(0, 10)))
