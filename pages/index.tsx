@@ -9,6 +9,7 @@ import Buttons from '../components/Buttons/Buttons'
 import GJNumbersView from '../components/GJNumbersView/GJNumbersView'
 import Smile from '../components/Smile/Smile'
 import NamedColors from '../components/NamedColors/NamedColors'
+import WorldPopulation from '../components/WorldPopulation/WorldPopulation'
 
 export const getServerSideProps = async () => {
   const bitstampData = await fetch('https://www.bitstamp.net/api/v2/ticker/')
@@ -130,7 +131,8 @@ export default function Home({
 
         <footer className={styles.footer}>
           {/* <Smile /> */}
-          <NamedColors />
+          {/* <NamedColors /> */}
+          <WorldPopulation />
         </footer>
       </div>
     </Context.Provider>

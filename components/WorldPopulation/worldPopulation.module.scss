@@ -1,0 +1,17 @@
+@use "styles" as *;
+
+.populationContainer{
+    margin:auto;
+    width: 300px;
+    .graph{
+        transform: translate(50px, 20px);
+        .xAxes{
+            font-size: 6px;
+            text-anchor: middle;
+        }
+        .yAxes{
+            font-size: 7px;
+            text-anchor: end;
+        }
+    }
+}
