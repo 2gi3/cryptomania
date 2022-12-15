@@ -20,3 +20,18 @@ export interface ButtonsData {
     RGBHexValue: string
     '': string
   }}
+
+  export interface worldPopulationData {
+    '#': string
+    'Country (or dependency)': string
+    'Population(2020)': number
+    YearlyChange: string
+    NetChange: string
+    'Density(P/Km²)': string
+    'Land Area(Km²)': string
+    'Migrants(net)': string
+    'Fert.Rate': string
+    'Med.Age': string
+    'UrbanPop %': string
+    WorldShare: string
+  }
