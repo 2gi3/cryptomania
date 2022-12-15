@@ -35,3 +35,17 @@ export interface ButtonsData {
     'UrbanPop %': string
     WorldShare: string
   }
+
+  export interface IrisType {
+    sepal_length: number;
+    sepal_width:  number;
+    petal_length: number;
+    petal_width:  number;
+    species:      Species;
+}
+
+export enum Species {
+    Setosa = "setosa",
+    Versicolor = "versicolor",
+    Virginica = "virginica",
+}
