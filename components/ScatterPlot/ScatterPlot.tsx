@@ -31,7 +31,6 @@ const ScatterPlot = () => {
     ).then((res) => setData(res))
     //   .then((res) => console.log(res))
   }, [])
-  console.log(data)
 
   if (!data) {
     return <pre>Loading...</pre>
@@ -83,10 +82,12 @@ const ScatterPlot = () => {
               </g>
             ))}
             {yScale.ticks().map((tickValue) => (
-              <g transform={`translate(0,${yScale(tickValue)})`}>
+              <g
+                key={tickValue}
+                transform={`translate(0,${yScale(tickValue)})`}
+              >
                 <line x2={innerWidth} stroke={'black'} />
                 <text
-                  key={tickValue}
                   className={styles.yAxes}
                   x={-5}
                   //   y={yScale(tickValue)}
