@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import { csv, max, extent, scaleBand, scaleLinear, format } from 'd3'
+import { csv, max, extent, scaleTime, scaleLinear, timeFormat } from 'd3'
 import { IrisType, Species } from '../../types'
-import styles from './scatterPlot.module.scss'
+import styles from './temperatureLineChart.module.scss'
 
-const ScatterPlot = () => {
+const TemperatureLineChart = () => {
   const [data, setData] = useState<IrisType[] | null>(null)
 
   const height = 300
@@ -17,16 +17,14 @@ const ScatterPlot = () => {
   const innerHeightY = height - (margin.top + margin.bottom)
 
   const row = (d) => {
-    ;(d.sepal_length = +d.sepal_length),
-      (d.sepal_width = +d.sepal_width),
-      (d.petal_length = +d.petal_length),
-      (d.petal_width = +d.petal_length)
+    d.sepal_length = +d.temperature
+    d.timestamp = new Date(d.timestamp)
     return d
   }
 
   useEffect(() => {
     csv(
-      'https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/iris.csv',
+      'https://gist.githubusercontent.com/curran/90240a6d88bdb1411467b21ea0769029/raw/week_temperature_sf.csv',
       row
     ).then((res) => setData(res))
     //   .then((res) => console.log(res))
@@ -36,11 +34,11 @@ const ScatterPlot = () => {
     return <pre>Loading...</pre>
   }
 
-  const xValue = (d) => d.sepal_length
-  const xAxisLable = 'Sepal Length'
+  const xValue = (d) => d.timestamp
+  const xAxisLable = 'Time'
 
-  const yValue = (d) => d.sepal_width
-  const yAxisLable = 'Sepal Width'
+  const yValue = (d) => d.temperature
+  const yAxisLable = 'Temperature'
 
   const xScale = scaleLinear()
     .domain(extent(data, xValue))
@@ -49,7 +47,7 @@ const ScatterPlot = () => {
 
   const yScale = scaleLinear()
     .domain(extent(data, yValue))
-    .range([0, innerHeightY])
+    .range([innerHeightY, 0])
 
   return (
     <>
@@ -66,7 +64,7 @@ const ScatterPlot = () => {
             >
               {yAxisLable}
             </text>
-            {xScale.ticks(10).map((tickValue) => (
+            {xScale.ticks().map((tickValue) => (
               <g
                 key={tickValue}
                 transform={`translate(${xScale(tickValue)},0)`}
@@ -77,7 +75,7 @@ const ScatterPlot = () => {
                   y={innerHeightY + 15}
                   dy={'.71em'}
                 >
-                  {tickValue}
+                  {timeFormat('%a')(tickValue)}
                 </text>
               </g>
             ))}
@@ -119,4 +117,4 @@ const ScatterPlot = () => {
   )
 }
 
-export default ScatterPlot
+export default TemperatureLineChart
