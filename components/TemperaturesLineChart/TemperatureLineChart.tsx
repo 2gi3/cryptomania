@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react'
-import { csv, max, extent, scaleTime, scaleLinear, timeFormat } from 'd3'
+import {
+  csv,
+  max,
+  curveNatural,
+  extent,
+  line,
+  scaleLinear,
+  timeFormat,
+} from 'd3'
 import { IrisType, Species } from '../../types'
 import styles from './temperatureLineChart.module.scss'
 
@@ -95,13 +103,23 @@ const TemperatureLineChart = () => {
                 </text>
               </g>
             ))}
+            <path
+              fill="none"
+              stroke="black"
+              //css stroke-linejoin: round;
+              //css stroke-linecap: round;
+              d={line()
+                .x((d) => xScale(xValue(d)))
+                .y((d) => yScale(yValue(d)))
+                .curve(curveNatural)(data)}
+            />
             {data.map((d, i) => {
               const elem = (
                 <circle
                   key={i}
                   cx={xScale(xValue(d))}
                   cy={yScale(yValue(d))}
-                  r={10}
+                  r={2}
                   // height={20}
                 >
                   {/* <title>{formatNumber(d['Population(2020)'])}</title> */}
