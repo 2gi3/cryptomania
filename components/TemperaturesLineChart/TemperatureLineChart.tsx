@@ -56,6 +56,7 @@ const TemperatureLineChart = () => {
   const yScale = scaleLinear()
     .domain(extent(data, yValue))
     .range([innerHeightY, 0])
+    .nice()
 
   return (
     <>
