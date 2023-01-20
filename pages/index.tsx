@@ -13,43 +13,89 @@ import WorldPopulation from '../components/WorldPopulation/WorldPopulation'
 import ScatterPlot from '../components/ScatterPlot/ScatterPlot'
 import TemperatureLineChart from '../components/TemperaturesLineChart/TemperatureLineChart'
 
+// export const getServerSideProps = async () => {
+//   const [bitstampData, finexData, coinbaseEntireRes, buttonsData] =
+//     await Promise.all([
+//       fetch('https://www.bitstamp.net/api/v2/ticker/').then((res) =>
+//         res.json()
+//       ),
+//       fetch('https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD').then(
+//         (res) => res.json()
+//       ),
+//       fetch('https://api.coinbase.com/v2/exchange-rates?currency=BTC').then(
+//         (res) => res.json()
+//       ),
+//       fetch('https://www.bitstamp.net/api/v2/trading-pairs-info/').then((res) =>
+//         res.json()
+//       ),
+//     ]).catch((err) => console.log(err))
+
+//   return {
+//     props: {
+//       bitstampData,
+//       coinbaseData: coinbaseEntireRes.data,
+//       finexData,
+//       buttonsData,
+//     },
+//   }
+// }
+
 export const getServerSideProps = async () => {
-  const bitstampData = await fetch('https://www.bitstamp.net/api/v2/ticker/')
-    .then((res) => res.json())
-    .catch((err) => console.log(err))
+  const results = await Promise.all([
+    fetch('https://www.bitstamp.net/api/v2/ticker/').then((res) => res.json()),
+    fetch('https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD').then(
+      (res) => res.json()
+    ),
+    fetch('https://api.coinbase.com/v2/exchange-rates?currency=BTC').then(
+      (res) => res.json()
+    ),
+    fetch('https://www.bitstamp.net/api/v2/trading-pairs-info/').then((res) =>
+      res.json()
+    ),
+  ]).catch((err) => console.log(err))
 
-  const finexData = await fetch(
-    'https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD'
-  )
-    .then((res) => res.json())
-    .catch((err) => console.log(err))
-
-  const coinbaseEntireRes = await fetch(
-    'https://api.coinbase.com/v2/exchange-rates?currency=BTC'
-  )
-    .then((res) => res.json())
-    .catch((err) => console.log(err))
-
-  const buttonsData = await fetch(
-    'https://www.bitstamp.net/api/v2/trading-pairs-info/'
-  )
-    .then((res) => res.json())
-    .catch((err) => console.log(err))
-
-  // Promise.all([bitstampRes, finexRes, coinbaseEntireRes, buttonsRes]).then(
-  //   (values) => {
-
-  //   }
-  // )
   return {
     props: {
-      bitstampData,
-      coinbaseData: coinbaseEntireRes.data,
-      finexData,
-      buttonsData,
+      bitstampData: results[0],
+      coinbaseData: results[2].data,
+      finexData: results[1],
+      buttonsData: results[3],
     },
   }
 }
+
+// export const getServerSideProps = async () => {
+//   const bitstampData = await fetch('https://www.bitstamp.net/api/v2/ticker/')
+//     .then((res) => res.json())
+//     .catch((err) => console.log(err))
+
+//   const finexData = await fetch(
+//     'https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD'
+//   )
+//     .then((res) => res.json())
+//     .catch((err) => console.log(err))
+
+//   const coinbaseEntireRes = await fetch(
+//     'https://api.coinbase.com/v2/exchange-rates?currency=BTC'
+//   )
+//     .then((res) => res.json())
+//     .catch((err) => console.log(err))
+
+//   const buttonsData = await fetch(
+//     'https://www.bitstamp.net/api/v2/trading-pairs-info/'
+//   )
+//     .then((res) => res.json())
+//     .catch((err) => console.log(err))
+
+//   return {
+//     props: {
+//       bitstampData,
+//       coinbaseData: coinbaseEntireRes.data,
+//       finexData,
+//       buttonsData,
+//     },
+//   }
+// }
 
 export const Context = React.createContext('BTC/USD')
 
