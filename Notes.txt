@@ -1,2 +1,0 @@
-The "noImplicitAny" option in next.config.js has been set to false for the first stage of developement, 
-it will be set to true at a later stage

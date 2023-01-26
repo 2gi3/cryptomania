@@ -1,62 +1,61 @@
-import { useState, useEffect } from 'react'
-import { csv, max, extent, scaleBand, scaleLinear, format } from 'd3'
-import { IrisType, Species } from '../../types'
-import styles from './scatterPlot.module.scss'
+import { useState, useEffect } from "react";
+import { csv, max, extent, scaleBand, scaleLinear, format } from "d3";
+import { IrisType, Species } from "../types";
 
 const ScatterPlot = () => {
-  const [data, setData] = useState<IrisType[] | null>(null)
+  const [data, setData] = useState<IrisType[] | null>(null);
 
-  const height = 300
+  const height = 300;
   const margin = {
     top: 20,
     right: 20,
     bottom: 20,
     left: 20,
-  }
-  const innerWidth = height - (margin.left + margin.right)
-  const innerHeightY = height - (margin.top + margin.bottom)
+  };
+  const innerWidth = height - (margin.left + margin.right);
+  const innerHeightY = height - (margin.top + margin.bottom);
 
   const row = (d) => {
-    ;(d.sepal_length = +d.sepal_length),
+    (d.sepal_length = +d.sepal_length),
       (d.sepal_width = +d.sepal_width),
       (d.petal_length = +d.petal_length),
-      (d.petal_width = +d.petal_length)
-    return d
-  }
+      (d.petal_width = +d.petal_length);
+    return d;
+  };
 
   useEffect(() => {
     csv(
-      'https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/iris.csv',
+      "https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/iris.csv",
       row
-    ).then((res) => setData(res))
+    ).then((res) => setData(res));
     //   .then((res) => console.log(res))
-  }, [])
+  }, []);
 
   if (!data) {
-    return <pre>Loading...</pre>
+    return <pre>Loading...</pre>;
   }
 
-  const xValue = (d) => d.sepal_length
-  const xAxisLable = 'Sepal Length'
+  const xValue = (d) => d.sepal_length;
+  const xAxisLable = "Sepal Length";
 
-  const yValue = (d) => d.sepal_width
-  const yAxisLable = 'Sepal Width'
+  const yValue = (d) => d.sepal_width;
+  const yAxisLable = "Sepal Width";
 
   const xScale = scaleLinear()
     .domain(extent(data, xValue))
     .range([0, innerWidth])
-    .nice()
+    .nice();
 
   const yScale = scaleLinear()
     .domain(extent(data, yValue))
-    .range([0, innerHeightY])
+    .range([0, innerHeightY]);
 
   return (
     <>
       Iris
-      <div className={styles.populationContainer}>
+      <div>
         <svg width="310" height={height + 40}>
-          <g className={styles.graph}>
+          <g>
             <text x={innerWidth / 2} y={innerHeightY + 40} textAnchor="middle">
               {xAxisLable}
             </text>
@@ -71,12 +70,8 @@ const ScatterPlot = () => {
                 key={tickValue}
                 transform={`translate(${xScale(tickValue)},0)`}
               >
-                <line y2={innerHeightY} stroke={'black'} />
-                <text
-                  className={styles.xAxes}
-                  y={innerHeightY + 15}
-                  dy={'.71em'}
-                >
+                <line y2={innerHeightY} stroke={"black"} />
+                <text y={innerHeightY + 15} dy={".71em"}>
                   {tickValue}
                 </text>
               </g>
@@ -86,12 +81,11 @@ const ScatterPlot = () => {
                 key={tickValue}
                 transform={`translate(0,${yScale(tickValue)})`}
               >
-                <line x2={innerWidth} stroke={'black'} />
+                <line x2={innerWidth} stroke={"black"} />
                 <text
-                  className={styles.yAxes}
                   x={-5}
                   //   y={yScale(tickValue)}
-                  dy={'.32em'}
+                  dy={".32em"}
                 >
                   {tickValue}
                 </text>
@@ -108,15 +102,15 @@ const ScatterPlot = () => {
                 >
                   {/* <title>{formatNumber(d['Population(2020)'])}</title> */}
                 </circle>
-              )
+              );
 
-              return elem
+              return elem;
             })}
           </g>
         </svg>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ScatterPlot
+export default ScatterPlot;
