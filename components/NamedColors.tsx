@@ -1,30 +1,32 @@
-import { useState, useEffect } from "react";
-import { csvParse, arc, pie } from "d3";
-import { NamedColorsType } from "../types";
+// @ts-nocheck
+
+import { useState, useEffect } from 'react'
+import { csvParse, arc, pie } from 'd3'
+import { NamedColorsType } from '../types'
 
 const NamedColors = () => {
-  const [data, setData] = useState<NamedColorsType[] | null>(null);
-  const pieArc = arc().innerRadius(0).outerRadius(150);
-  const colorPie = pie().value(1);
+  const [data, setData] = useState<NamedColorsType[] | null>(null)
+  const pieArc = arc().innerRadius(0).outerRadius(150)
+  const colorPie = pie().value(1)
 
   useEffect(() => {
     fetch(
-      "https://gist.githubusercontent.com/2gi3/c18f1c121ddd85d6171323559bf1a0f4/raw/CSSNamedColors.csv"
+      'https://gist.githubusercontent.com/2gi3/c18f1c121ddd85d6171323559bf1a0f4/raw/CSSNamedColors.csv'
     )
       .then((res) => res.text())
       .then((text) => {
-        const Data = csvParse(text);
-        let message: any = "";
-        message = message + (text.length / 1024).toFixed(1) + "kb\n";
-        message = message + Data.length + "rows\n";
-        message = message + Data.columns.length + "columns\n";
-        console.log(message);
-        setData(Data);
-      });
-  }, []);
-  console.log(data);
+        const Data = csvParse(text)
+        let message: any = ''
+        message = message + (text.length / 1024).toFixed(1) + 'kb\n'
+        message = message + Data.length + 'rows\n'
+        message = message + Data.columns.length + 'columns\n'
+        console.log(message)
+        setData(Data)
+      })
+  }, [])
+  console.log(data)
   if (!data) {
-    return <pre>Loading...</pre>;
+    return <pre>Loading...</pre>
   }
   return (
     <>
@@ -48,6 +50,6 @@ const NamedColors = () => {
         </svg>
       </div>
     </>
-  );
-};
-export default NamedColors;
+  )
+}
+export default NamedColors

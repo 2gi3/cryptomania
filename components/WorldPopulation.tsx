@@ -1,38 +1,40 @@
-import { useState, useEffect } from "react";
-import { max, scaleBand, scaleLinear, format } from "d3";
-import { worldPopulationData } from "../types";
-import useData from "../../functions/useData";
+// @ts-nocheck
+
+import { useState, useEffect } from 'react'
+import { max, scaleBand, scaleLinear, format } from 'd3'
+import { worldPopulationData } from '../types'
+import useData from '../functions/useData'
 
 const WorldPopulation = () => {
-  const height = 300;
+  const height = 300
   const margin = {
     top: 20,
     right: 20,
     bottom: 20,
     left: 20,
-  };
-  const innerHeightX = height - (margin.left + margin.right);
-  const innerHeightY = height - (margin.top + margin.bottom);
+  }
+  const innerHeightX = height - (margin.left + margin.right)
+  const innerHeightY = height - (margin.top + margin.bottom)
 
   const data = useData(
-    "https://gist.githubusercontent.com/2gi3/fb7be8ab47ce70df56e5de8315837692/raw/worldPopulation2022.csv"
-  );
+    'https://gist.githubusercontent.com/2gi3/fb7be8ab47ce70df56e5de8315837692/raw/worldPopulation2022.csv'
+  )
 
   if (!data) {
-    return <pre>Loading...</pre>;
+    return <pre>Loading...</pre>
   }
 
   const formatNumber = (n: number): string => {
-    return format(".2s")(n).replace("G", "B");
-  };
+    return format('.2s')(n).replace('G', 'B')
+  }
 
   const yScale = scaleBand()
-    .domain(data.map((d) => d["Country (or dependency)"]))
-    .range([0, innerHeightY]);
+    .domain(data.map((d) => d['Country (or dependency)']))
+    .range([0, innerHeightY])
 
   const xScale = scaleLinear()
-    .domain([0, max(data, (d) => d["Population(2020)"])])
-    .range([0, innerHeightX]);
+    .domain([0, max(data, (d) => d['Population(2020)'])])
+    .range([0, innerHeightX])
 
   return (
     <>
@@ -52,8 +54,8 @@ const WorldPopulation = () => {
                 key={tickValue}
                 transform={`translate(${xScale(tickValue)},0)`}
               >
-                <line y2={innerHeightY} stroke={"black"} />
-                <text y={innerHeightY + 5} dy={".71em"}>
+                <line y2={innerHeightY} stroke={'black'} />
+                <text y={innerHeightY + 5} dy={'.71em'}>
                   {formatNumber(tickValue)}
                 </text>
               </g>
@@ -63,7 +65,7 @@ const WorldPopulation = () => {
                 key={tickValue}
                 x={-5}
                 y={yScale(tickValue) + yScale.bandwidth() / 2}
-                dy={".32em"}
+                dy={'.32em'}
               >
                 {tickValue}
               </text>
@@ -71,18 +73,18 @@ const WorldPopulation = () => {
             {data.map((d, i) => {
               const elem = (
                 <rect
-                  key={d["Country (or dependency)"]}
+                  key={d['Country (or dependency)']}
                   x={0}
-                  y={yScale(d["Country (or dependency)"])}
-                  width={xScale(d["Population(2020)"])}
+                  y={yScale(d['Country (or dependency)'])}
+                  width={xScale(d['Population(2020)'])}
                   height={yScale.bandwidth()}
                   // height={20}
                 >
-                  <title>{formatNumber(d["Population(2020)"])}</title>
+                  <title>{formatNumber(d['Population(2020)'])}</title>
                 </rect>
-              );
+              )
 
-              return elem;
+              return elem
             })}
           </g>
         </svg>
@@ -93,6 +95,6 @@ const WorldPopulation = () => {
         </svg> */}
       </div>
     </>
-  );
-};
-export default WorldPopulation;
+  )
+}
+export default WorldPopulation

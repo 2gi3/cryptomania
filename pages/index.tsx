@@ -1,30 +1,30 @@
 // @ts-nocheck
 
-import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { AppProps } from "next/app";
-import Buttons from "../components/Buttons";
-import GJNumbersView from "../components/GJNumbersView";
-import NamedColors from "../components/NamedColors";
-import WorldPopulation from "../components//WorldPopulation";
-import ScatterPlot from "../components/ScatterPlot";
-import TemperatureLineChart from "../components/TemperatureLineChart";
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'next/image'
+import React, { useEffect, useState } from 'react'
+import { AppProps } from 'next/app'
+import Buttons from '../components/Buttons'
+import GJNumbersView from '../components/GJNumbersView'
+import NamedColors from '../components/NamedColors'
+import WorldPopulation from '../components//WorldPopulation'
+import ScatterPlot from '../components/ScatterPlot'
+import TemperatureLineChart from '../components/TemperatureLineChart'
 
 export const getServerSideProps = async () => {
   const results = await Promise.all([
-    fetch("https://www.bitstamp.net/api/v2/ticker/").then((res) => res.json()),
-    fetch("https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD").then(
+    fetch('https://www.bitstamp.net/api/v2/ticker/').then((res) => res.json()),
+    fetch('https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD').then(
       (res) => res.json()
     ),
-    fetch("https://api.coinbase.com/v2/exchange-rates?currency=BTC").then(
+    fetch('https://api.coinbase.com/v2/exchange-rates?currency=BTC').then(
       (res) => res.json()
     ),
-    fetch("https://www.bitstamp.net/api/v2/trading-pairs-info/").then((res) =>
+    fetch('https://www.bitstamp.net/api/v2/trading-pairs-info/').then((res) =>
       res.json()
     ),
-  ]).catch((err) => console.log(err));
+  ]).catch((err) => console.log(err))
 
   return {
     props: {
@@ -33,10 +33,10 @@ export const getServerSideProps = async () => {
       finexData: results[1],
       buttonsData: results[3],
     },
-  };
-};
+  }
+}
 
-export const Context = React.createContext("BTC/USD");
+export const Context = React.createContext('BTC/USD')
 
 const Home: NextPage = ({
   buttonsData,
@@ -44,38 +44,38 @@ const Home: NextPage = ({
   coinbaseData,
   finexData,
 }) => {
-  const [selectedPair, setSelectedPair] = useState("BTC/USD");
+  const [selectedPair, setSelectedPair] = useState('BTC/USD')
 
-  const coinbaseLast = Number(coinbaseData.rates.USD);
+  const coinbaseLast = Number(coinbaseData.rates.USD)
   const bitstampUSD = bitstampData.find((obj) => {
-    return obj.pair === "BTC/USD";
-  });
-  const bitstampLast = Number(bitstampUSD.last);
-  const finexLast = finexData[0][1];
+    return obj.pair === 'BTC/USD'
+  })
+  const bitstampLast = Number(bitstampUSD.last)
+  const finexLast = finexData[0][1]
 
   const calculateAverageLast = (
     a: number,
     b: number,
     c: number
   ): number | string => {
-    let array = [];
-    typeof a === "number" ? array.push(a) : null;
-    typeof b === "number" ? array.push(b) : null;
-    typeof c === "number" ? array.push(c) : null;
-    const sum = array.reduce((a, b) => a + b, 0);
-    const average = sum / array.length;
+    let array = []
+    typeof a === 'number' ? array.push(a) : null
+    typeof b === 'number' ? array.push(b) : null
+    typeof c === 'number' ? array.push(c) : null
+    const sum = array.reduce((a, b) => a + b, 0)
+    const average = sum / array.length
     if (array.length > 0) {
-      return average;
+      return average
     } else {
-      return "Data not available at this time";
+      return 'Data not available at this time'
     }
-  };
+  }
 
   const averageLast = calculateAverageLast(
     finexLast,
     bitstampLast,
     coinbaseLast
-  );
+  )
   return (
     <div>
       <Head>
@@ -84,15 +84,15 @@ const Home: NextPage = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-3xl font-bold underline">WORK IN PROGRESS</h1>
+      <h1 className="text-xl font-bold underline">WORK IN PROGRESS</h1>
 
-      <main>
-        <section>
+      <main className="flex flex-wrap bg-gray-200 justify-center">
+        <section className="bg-primary w-72 flex flex-col justify-center items-center h-64 ">
           <h1>Average ticker values</h1>
           <h2>&rdquo;Last&rdquo; value for BTC/USD</h2>
           <p>{averageLast}</p>
         </section>
-        <section>
+        <section className="bg-yellow-300 w-72 ">
           <div>
             <Buttons pairs={buttonsData} />
           </div>
@@ -101,14 +101,13 @@ const Home: NextPage = ({
       </main>
 
       <footer>
-        {/* <Smile /> */}
-        {/* <NamedColors /> */}
-        {/* <ScatterPlot /> */}
-        {/* <WorldPopulation /> */}
+        <NamedColors />
+        <ScatterPlot />
+        <WorldPopulation />
         <TemperatureLineChart />
       </footer>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+// @ts-nocheck
+import { useState, useEffect } from 'react'
 import {
   csv,
   max,
@@ -7,55 +8,55 @@ import {
   line,
   scaleLinear,
   timeFormat,
-} from "d3";
-import { IrisType, Species } from "../types";
+} from 'd3'
+import { IrisType, Species } from '../types'
 
 const TemperatureLineChart = () => {
-  const [data, setData] = useState<IrisType[] | null>(null);
+  const [data, setData] = useState<IrisType[] | null>(null)
 
-  const height = 300;
+  const height = 300
   const margin = {
     top: 20,
     right: 20,
     bottom: 20,
     left: 20,
-  };
-  const innerWidth = height - (margin.left + margin.right);
-  const innerHeightY = height - (margin.top + margin.bottom);
+  }
+  const innerWidth = height - (margin.left + margin.right)
+  const innerHeightY = height - (margin.top + margin.bottom)
 
   const row = (d) => {
-    d.sepal_length = +d.temperature;
-    d.timestamp = new Date(d.timestamp);
-    return d;
-  };
+    d.sepal_length = +d.temperature
+    d.timestamp = new Date(d.timestamp)
+    return d
+  }
 
   useEffect(() => {
     csv(
-      "https://gist.githubusercontent.com/curran/90240a6d88bdb1411467b21ea0769029/raw/week_temperature_sf.csv",
+      'https://gist.githubusercontent.com/curran/90240a6d88bdb1411467b21ea0769029/raw/week_temperature_sf.csv',
       row
-    ).then((res) => setData(res));
+    ).then((res) => setData(res))
     //   .then((res) => console.log(res))
-  }, []);
+  }, [])
 
   if (!data) {
-    return <pre>Loading...</pre>;
+    return <pre>Loading...</pre>
   }
 
-  const xValue = (d) => d.timestamp;
-  const xAxisLable = "Time";
+  const xValue = (d) => d.timestamp
+  const xAxisLable = 'Time'
 
-  const yValue = (d) => d.temperature;
-  const yAxisLable = "Temperature";
+  const yValue = (d) => d.temperature
+  const yAxisLable = 'Temperature'
 
   const xScale = scaleLinear()
     .domain(extent(data, xValue))
     .range([0, innerWidth])
-    .nice();
+    .nice()
 
   const yScale = scaleLinear()
     .domain(extent(data, yValue))
     .range([innerHeightY, 0])
-    .nice();
+    .nice()
 
   return (
     <>
@@ -77,9 +78,9 @@ const TemperatureLineChart = () => {
                 key={tickValue}
                 transform={`translate(${xScale(tickValue)},0)`}
               >
-                <line y2={innerHeightY} stroke={"black"} />
-                <text y={innerHeightY + 15} dy={".71em"}>
-                  {timeFormat("%a")(tickValue)}
+                <line y2={innerHeightY} stroke={'black'} />
+                <text y={innerHeightY + 15} dy={'.71em'}>
+                  {timeFormat('%a')(tickValue)}
                 </text>
               </g>
             ))}
@@ -88,11 +89,11 @@ const TemperatureLineChart = () => {
                 key={tickValue}
                 transform={`translate(0,${yScale(tickValue)})`}
               >
-                <line x2={innerWidth} stroke={"black"} />
+                <line x2={innerWidth} stroke={'black'} />
                 <text
                   x={-5}
                   //   y={yScale(tickValue)}
-                  dy={".32em"}
+                  dy={'.32em'}
                 >
                   {tickValue}
                 </text>
@@ -119,15 +120,15 @@ const TemperatureLineChart = () => {
                 >
                   {/* <title>{formatNumber(d['Population(2020)'])}</title> */}
                 </circle>
-              );
+              )
 
-              return elem;
+              return elem
             })}
           </g>
         </svg>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default TemperatureLineChart;
+export default TemperatureLineChart

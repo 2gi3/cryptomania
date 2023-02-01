@@ -1,5 +1,6 @@
+// @ts-nocheck
 interface GJNumberLabel {
-  data: [string, number];
+  data: [string, number]
 }
 
 function GJNumberLabel({ data }: GJNumberLabel) {
@@ -9,7 +10,7 @@ function GJNumberLabel({ data }: GJNumberLabel) {
       <div>{`${data[1]}`}</div>
       <div>{data[0]}</div>
     </div>
-  );
+  )
 }
 
-export default GJNumberLabel;
+export default GJNumberLabel

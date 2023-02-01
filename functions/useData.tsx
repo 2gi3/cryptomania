@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { useState, useEffect } from 'react'
 import { csv } from 'd3'
 import { worldPopulationData } from '../types'
