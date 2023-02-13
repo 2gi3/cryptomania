@@ -15,11 +15,12 @@ function Buttons({ pairs }) {
   return (
     <div>
       <input
+        className="w-32"
         type="text"
         placeholder="search"
         onChange={(e) => setSrc(e.target.value)}
       />
-      <div className="flex flex-wrap max-h-320 w-44 overflow-y-scroll">
+      <div className="flex flex-wrap max-h-215 w-32 overflow-y-scroll scrollbar scrollbar-track-yellow-300 search">
         <ul>
           {pairs
             .filter((pair) => {

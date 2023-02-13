@@ -86,31 +86,31 @@ const Home: NextPage = ({
       <header className="w-full h-10 flex justify-center items-center">
         <h1 className="text-xl font-bold underline">Cryptomaina</h1>
       </header>
-      <main>
-        <div className="flex flex-col lg:flex-row bg-gray-200 justify-center">
-          <section className="w-full bg-primary flex flex-col justify-center items-center h-60 p-10 min-w-min ">
+      <main className="p-2">
+        <div className="flex flex-row justify-center">
+          <section className="w-full bg-primary flex flex-col justify-center gap-1 max-w-xs items-center h-60 p-5 min-w-min  ">
             <h1>Average ticker values</h1>
             <h2>&rdquo;Last&rdquo; value for BTC/USD</h2>
             <p>{averageLast}</p>
           </section>
-          <section className="bg-yellow-300 ">
+          <section className="bg-yellow-300 w-32">
             <div>
               <Buttons pairs={buttonsData} />
             </div>
           </section>
         </div>
         <section>
-          <div className="bg-green-300">
+          <div className="flex flex-wrap max-w-2xl m-auto">
             <GJNumbersView data={bitstampData} />
           </div>
         </section>
       </main>
 
       <footer>
-        <NamedColors />
+        {/* <NamedColors />
         <ScatterPlot />
         <WorldPopulation />
-        <TemperatureLineChart />
+        <TemperatureLineChart /> */}
       </footer>
     </div>
   )

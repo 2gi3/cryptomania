@@ -6,3 +6,28 @@
     @apply flex justify-center items-center w-20 h-7 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out m-1;
     
 }
+
+.search::-webkit-scrollbar{
+    width: 14px;
+}
+::-webkit-scrollbar-thumb{
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
+    background: rgba(255, 0, 0, 0.700); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    /* border: 1px solid rgb(253 224 71 0.3);  */
+}
+::-webkit-scrollbar-thumb:hover{
+    background: rgb(255, 0, 0);
+}
+::-webkit-scrollbar-track{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
+    /* background-color: green;
+    border-radius: 100vw;*/
+    margin-block: 5px; 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(255,0,0,0.4); 
+}

@@ -12,6 +12,7 @@ module.exports = {
       },
       spacing: {
         320: '320px',
+        215: '215px',
       },
       maxHeight: {
         0: '0',

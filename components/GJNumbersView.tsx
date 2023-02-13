@@ -20,8 +20,8 @@ function SelectedInfo({ data }) {
   let prop: [string, number]
 
   return (
-    <figure>
-      <h3>Trading values for {selectedPair} </h3>
+    <figure className="w-full flex flex-wrap justify-around">
+      <h3 className="w-full text-center">Trading values for {selectedPair} </h3>
       {targetPairValues.map((entry, index: number) => {
         prop = [entry[0], Number(entry[1])]
         return <GJNumberLabel key={`${entry}-${index}`} data={prop} />
