@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useState, useRef, useEffect } from 'react'
 import * as d3 from 'd3'
 
@@ -16,9 +18,9 @@ function PairGraph2({ pair }) {
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
-      const res = await fetch(`/api/pairsData/${endpoint}`).then((response) =>
-        response.json()
-      )
+      const res = await fetch(
+        `https://cryptomania-draft-giuseppe.netlify.app/api/pairsData/${endpoint}`
+      ).then((response) => response.json())
       setGraphData((prevGraphData) => {
         const newGraphData = [...prevGraphData, res].slice(-10)
         return newGraphData
