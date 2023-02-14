@@ -10,7 +10,6 @@ export default async (req: NextApiRequest, res: NextApiResponse<LineGraphData>) 
       timestamp: data.timestamp,
       last: data.last,
     };
-    console.log(obj);
   
     res.setHeader('Content-Type', 'application/json'); 
     res.statusCode = 200; 
