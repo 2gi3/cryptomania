@@ -4,6 +4,7 @@ import { useState, useEffect, useContext } from 'react'
 import GJNumberLabel from './GJNumberLabel'
 import { useSelector, useDispatch } from 'react-redux'
 import PairLineGraph from './PairLineGraph'
+import PairGraph2 from './PairGraph2'
 
 function SelectedInfo({ data }) {
   // const [selectedPair, setSelectedPair]: any = useContext(Context);
@@ -30,7 +31,8 @@ function SelectedInfo({ data }) {
   return (
     <figure className="w-full flex flex-wrap justify-around">
       <h3 className="w-full text-center">Trading values for {selectedPair} </h3>
-      <PairLineGraph pair={selectedPair} />
+      {/* <PairLineGraph pair={selectedPair} /> */}
+      <PairGraph2 pair={selectedPair} />
       <p className="w-full text-center mb-5">Last update: {time}</p>
       {targetPairValues.map((entry, index: number) => {
         prop = [entry[0], Number(entry[1])]
