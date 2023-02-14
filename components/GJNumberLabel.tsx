@@ -5,10 +5,9 @@ interface GJNumberLabel {
 
 function GJNumberLabel({ data }: GJNumberLabel) {
   return (
-    <div className="w-32 m-1 bg-green-300">
-      {/* without interpolation the browser gives an error but not typescript */}
+    <div className="flex w-56 justify-between  m-1 bg-green-300">
       <div>{data[0]}</div>
-      <div>{`${data[1]}`}</div>
+      <div>{`${data[1].toFixed(4)}`}</div>
     </div>
   )
 }

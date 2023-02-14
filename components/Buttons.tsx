@@ -7,15 +7,14 @@ import { selectPair } from '../redux/currency'
 function Buttons({ pairs }) {
   const selectedPair = useSelector((state) => state.currency.selected)
   const dispatch = useDispatch()
-  const [toggle, setToggle] = useState('hidden')
-  const [value, setValue] = useState(selectedPair)
+  // const [toggle, setToggle] = useState('hidden')
+  // const [value, setValue] = useState(selectedPair)
   const [src, setSrc] = useState('')
-  const oninput = (e) => {}
 
   return (
     <div>
       <input
-        className="w-32"
+        className="w-full bg-gray-300"
         type="text"
         placeholder="search"
         onChange={(e) => setSrc(e.target.value)}
