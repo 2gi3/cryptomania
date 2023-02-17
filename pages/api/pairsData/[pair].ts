@@ -4,15 +4,26 @@ import { LineGraphData } from '../../../types/types';
 export default async (req: NextApiRequest, res: NextApiResponse<LineGraphData>) => {
     const { query: { pair } } = req;
   
-    const raw = await fetch(`https://www.bitstamp.net/api/v2/ticker/${pair}`);
-    const data = await raw.json();
-    const obj = {
-      timestamp: data.timestamp,
-      last: data.last,
-    };
+    try {
+      const raw = await fetch(`https://www.bitstamp.net/api/v2/ticker/${pair}`, { mode: 'no-cors' });
+      const data = await raw.json();
+      const obj = {
+        timestamp: data.timestamp,
+        last: data.last,
+      };
   
-    res.setHeader('Content-Type', 'application/json'); 
-    res.statusCode = 200; 
-    res.end(JSON.stringify(obj)); 
+      res.setHeader('Content-Type', 'application/json');
+      res.statusCode = 200;
+      res.end(JSON.stringify(obj));
+    } catch (error) {
+      console.error(error);
+      res.statusCode = 500;
+      res.end('Error fetching data');
+    }
   };
   
+
+
+
+  
+

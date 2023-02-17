@@ -40,7 +40,7 @@ function TestGraph() {
 
     const yAxes = d3.axisLeft(yScale).ticks(5)
 
-    svg.append('g').call(xAxes).attr('transform', `translate(0, ${h}`)
+    svg.append('g').call(xAxes).attr('transform', `translate(0, ${h})`)
 
     svg.append('g').call(yAxes)
     //set up the data
